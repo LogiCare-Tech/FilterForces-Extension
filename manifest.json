@@ -1,0 +1,37 @@
+
+{
+    "manifest_version": 2,
+    "name": "ProductivityViz",
+    "version": "0.1.0",
+    "description": "Visualizes the time took to solve particular type of question",
+   
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "storage"
+    ],
+    
+    "web_accessible_resources": [
+        "pause.png",
+        "play-button-arrowhead.png"
+    ],
+       
+       "icons": { 
+              
+           "48": "Logo.png",
+           "128": "Logo128.png"
+           },
+    "content_scripts":[
+           {
+                  "matches": ["https://codeforces.com/problemset/problem/*"],
+                  "js":["Timer.js"],
+                  "css": ["styles.css"]
+                  
+           }
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    }
+    
+    
+}

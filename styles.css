@@ -1,0 +1,18 @@
+ @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+
+.Controls{
+       
+      
+       position: relative;
+       display: flex;
+       flex-direction: row;
+       justify-content: space-evenly;
+       width: 30%;
+      align-items: center;
+       align-content: space-between;
+} 
+#Buttn{
+       width: 25px;
+       height: 30px;
+       margin-top: 30px;
+}
