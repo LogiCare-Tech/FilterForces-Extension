@@ -16,3 +16,56 @@
        height: 30px;
        margin-top: 30px;
 }
+.login_page{
+      width: auto;
+       margin-bottom: 10px;
+       color: #444;
+       padding: 15px 15px;
+       background-color: rgb(129, 115, 192);
+       border: 2px solid black;
+      
+   }
+   .login_page h2{
+       text-transform: uppercase;
+       font-size: 2rem;
+       margin: 2em 0;
+       letter-spacing: 1.5px;
+       
+   }
+   .login_page input{
+       width: auto;
+       height: 45px;
+       margin-top: 10px;
+       margin-left: auto;
+       margin-right: auto;
+       border: 2px solid #777;
+       outline: none;
+       padding: 0 10px;
+       
+   }
+   .login_page .row{
+       display: flex;
+       justify-content: space-between;
+       flex-wrap: wrap-reverse;
+       align-items: flex-start;
+   }
+   .login_page .row a{
+       color: crimson;
+   }
+   .login_page .row button{
+       width: 150px;
+       padding: 10px 0;
+       color: white;
+       background: black;
+       text-transform: uppercase;
+       letter-spacing: 1.5px;
+       margin-right: 10px;
+   }
+   .login_page p{
+       margin: 10px 0;
+       font-weight: bolder;
+   }
+   .login_page a{
+       color:  #111;
+       font-weight: 600;
+   }

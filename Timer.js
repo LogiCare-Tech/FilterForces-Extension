@@ -3,7 +3,7 @@ var arr = [];
 for (var i = 0; i < links.length; i++) {
   arr.push(links[i].href.split("/"));
 }
-localStorage.setItem('LOGIN', true)
+localStorage.setItem('LOGIN', false)
 var html = ``
 var handle;
 var problemNo;
@@ -34,12 +34,44 @@ var containerMovements = document.getElementById("sidebar");
     var Interval;
     const ImgsrcPause = chrome.extension.getURL("pause.png");
     const ImgsrcPlay = chrome.extension.getURL("play-button-arrowhead.png");
+    
     var tArray = [00, 00, 00];
+   
+    //Login controls
+    var LogGate, forgotGate;
 
 LoadHTML();
-if(containerMovements)
+
+    // if(LogGate)
+    // {
+    //   LogGate.addEventListener('click', () => {
+    //     console.log("click")
+    //     window.open("http://localhost:3000/login", '_blank').focus();
+    //   })
+    // }
+    console.log(LogGate)
+    if(containerMovements)
     {
       containerMovements.insertAdjacentHTML("afterbegin", html);
+      LogGate = document.getElementById("willLogin");
+      forgotGate = document.getElementById("forgotLogin");
+      //If trying to login
+      LogGate.addEventListener('click', (e) => {
+         e.preventDefault()
+         const email = document.querySelector('#email').value;
+         const password = document.querySelector('#password').value;
+         console.log({email: email, password: password})
+
+      })
+      forgotGate.addEventListener('click', (e) => {
+        e.preventDefault();
+        chrome.runtime.sendMessage({message: "forgot"},(response) => {
+
+        })
+       
+      })
+      
+
     }
 function LoadHTML() {
   if (handle) {
@@ -50,7 +82,7 @@ function LoadHTML() {
     //Check if logged
     var loginStatus = localStorage.getItem('LOGIN')
     
-    if (loginStatus) {
+    if (loginStatus === true) {
       html = `<div class="roundbox sidebox" style="height: auto;
      width: auto;
     
@@ -74,18 +106,42 @@ function LoadHTML() {
                  
             </div>
             <button id="Restart" >Clear</button>
-            <button id = "Login"> Login </button>
+          
   
   </div> `
     }
     else{
-      html = `<div>
-      <h1>Please Login</h1>
-      <button id = "willLogin">Login</button>
-  </div>`
+      html = ` <form  class = "login_page">
+      <div>
+      <h1>Login please </h1>
+          <label htmlFor="email">Email Address</label>
+          <input
+              type="text"
+              placeholder="Enter email address"
+              id="email"
+              
+              name="email"
+              />
+      </div>
+      <div>
+          <label htmlFor="password">Password</label>
+          <input
+              type="password"
+              placeholder="Enter your password"
+              id="password"
+            
+              name="password"
+              />
+      </div>
+      <div class = "row">
+          <button id = "willLogin">Login</button>
+          <p id = "forgotLogin">Forgot passowrd</p>
+      </div>
+  </form>`
     }
    
-    
+    //If login button is clicked
+   
 
 
 
