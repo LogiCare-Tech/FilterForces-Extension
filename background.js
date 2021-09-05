@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                    'Content-Type': 'application/json'
               },
               mode: 'cors',
-
+              credentials: 'include',
               body: JSON.stringify(obj)
           } ).then(res => {
               if(res.status !== 200)
@@ -35,6 +35,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
        
           sendResponse({message: 'success'});
         
+    }
+    if(request.message[0] === "Time")
+    {
+        console.log("hi");
+        const doTheStuff = async()=>{
+           try{
+            const response = await fetch('http://localhost:3001/api/Users/refresh_token', {
+                method: 'POST',
+                credentials: 'include',
+                mode: 'cors'
+            
+            })
+            const json = await response.json();
+            console.log(json);
+           }
+           catch(Err)
+           {
+               console.log(Err);
+           }
+        }
+        doTheStuff();
+        sendResponse({message: "ghanta"})
     }
     if(request.message === "forgot")
     {

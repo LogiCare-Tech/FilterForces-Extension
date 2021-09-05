@@ -32,8 +32,8 @@ for (var i = 0; i < arr.length; i++) {
     }
   }
 }
-// const Imgsrc1 = chrome.extension.getURL("./pause.png");
-// const Imgsrc2 = chrome.extension.getURL("./play-button-arrowhead.png");
+//  const Imgsrc1 = chrome.extension.getURL("pause.png");
+//  const Imgsrc2 = chrome.extension.getURL("play-button-arrowhead.png");
 const Imgsrc1 = "";
 const Imgsrc2 = "";
 var timeStatus = "0 : 0 : 0";
@@ -70,10 +70,11 @@ function LoadHTML() {
                      </div>
                      <div class="Controls">
                           
-                            <img id="Buttn" src="${Imgsrc2}" alt="Chotusa imgae hu yaar">
+                           
                           
                      </div>
                      <button id="Restart" >Clear</button>
+                     <button id = "sendTime"> Save</button>
            
            </div> 
               
@@ -198,9 +199,10 @@ function LoadHTML() {
     var Time = document.getElementById("Number");
     var count = 0;
     var Interval;
-   // const ImgsrcPause = chrome.extension.getURL("pause.png");
-    //const ImgsrcPlay = chrome.extension.getURL("play-button-arrowhead.png");
-
+    //const ImgsrcPause = chrome.extension.getURL("pause.png");
+   // const ImgsrcPlay = chrome.extension.getURL("play-button-arrowhead.png");
+      const ImgsrcPause = "";
+      const ImgsrcPlay = "";
     //Login section
     var formLogin = document.getElementById("formLogin");
     var formForgot = document.getElementById("formForgot");
@@ -208,11 +210,13 @@ function LoadHTML() {
     var email = document.querySelector('.email');
     var password = document.querySelector('.password');
 
+    var sendTime = document.getElementById('sendTime');
     //Forgot section in action
     var forgotAction = document.getElementById("formForgotAction");
     //Register section in action
     var registerAction = document.getElementById("formRegisterAction");
   
+    
     if(formLogin)
     {
       formLogin.addEventListener("click", () => {
@@ -225,8 +229,8 @@ function LoadHTML() {
         chrome.runtime.sendMessage({message: ["login", payload]}, (response) => {
           if(response.message === 'success')
           {
-           // localStorage.setItem('LOGIN',"LoginSuccess");
-            //window.location.reload();
+            localStorage.setItem('LOGIN',"LoginSuccess");
+            window.location.reload();
           }
          // console.log("From the timer ",response.message)
         })
@@ -263,6 +267,15 @@ function LoadHTML() {
 
     
     var tArray = [00, 00, 00];
+    if(sendTime)
+    {
+      sendTime.addEventListener('click', () => {
+        console.log("hi");
+          chrome.runtime.sendMessage({message:["Time",tArray]}, (response) => {
+            console.log(response.message);
+          })
+      })
+    }
 if(Restart)
 {
   Restart.addEventListener("click", () => {

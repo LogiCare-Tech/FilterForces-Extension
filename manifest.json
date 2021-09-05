@@ -8,23 +8,15 @@
     "permissions": [
         "activeTab",
         "tabs",
-        "storage"
+        "storage",
+        "cookies"
         
         
     ],
-   "web_accessible_resources": [{
-       "resources": [ "pause.png",
-        "play-button-arrowhead.png"],
-        "matches": [],
-        "extension_ids": []
-   }],
     "host_permissions": [
-        "http://localhost:3001/*",
-        "https://codeforces.com/problemset/problem/*"
+         "http://localhost:3001/*"
     ]
-    
-   ,
-       
+     ,
        "icons": { 
               
            "48": "Logo.png",
