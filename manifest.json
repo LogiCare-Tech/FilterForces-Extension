@@ -1,6 +1,6 @@
 
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "ProductivityViz",
     "version": "0.1.0",
     "description": "Visualizes the time took to solve particular type of question",
@@ -9,12 +9,21 @@
         "activeTab",
         "tabs",
         "storage"
+        
+        
     ],
+   "web_accessible_resources": [{
+       "resources": [ "pause.png",
+        "play-button-arrowhead.png"],
+        "matches": [],
+        "extension_ids": []
+   }],
+    "host_permissions": [
+        "http://localhost:3001/*",
+        "https://codeforces.com/problemset/problem/*"
+    ]
     
-    "web_accessible_resources": [
-        "pause.png",
-        "play-button-arrowhead.png"
-    ],
+   ,
        
        "icons": { 
               
@@ -24,13 +33,14 @@
     "content_scripts":[
            {
                   "matches": ["https://codeforces.com/problemset/problem/*"],
-                  "js":["Timer.js"],
+                  "js":["SecondTimer.js"],
                   "css": ["styles.css"]
                   
            }
     ],
     "background": {
-        "scripts": ["background.js"]
+        "service_worker": "background.js"
+       
     }
     
     

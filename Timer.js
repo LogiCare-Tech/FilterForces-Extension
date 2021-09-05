@@ -3,7 +3,7 @@ var arr = [];
 for (var i = 0; i < links.length; i++) {
   arr.push(links[i].href.split("/"));
 }
-localStorage.setItem('LOGIN', false)
+
 var html = ``
 var handle;
 var problemNo;
@@ -38,9 +38,55 @@ var containerMovements = document.getElementById("sidebar");
     var tArray = [00, 00, 00];
    
     //Login controls
-    var LogGate, forgotGate;
+    var LogGate, forgotGate, innocent;
+    var loginStatus = localStorage.getItem('LOGIN')
+    console.log("Login status",loginStatus)
+  //   if (loginStatus) {
+  //     console.log("hi")
+  //     html = `<div class="roundbox sidebox" style="height: auto;
+  //    width: auto;
+    
+  //   padding: 20px;
+  
+  //    background-color: azure;
+  //    ">
+  // <h1 id="pud">Time will go here</h1>
+  //            <p><span>Handle: </span>${handle}</p>
+  //            <br>
+  //            <p>Type : ${problemType}</p>
+  //            <br>
+  //            <p>Number : ${problemNo}</p>
+  //           <div class="Screen">
+ 
+  //               <h1 id="Number">${timeStatus}</h1>
+  //           </div>
+  //           <div class="Controls">
+                 
+  //                  <img id="Buttn" src="${Imgsrc2}" alt="Chotusa imgae hu yaar">
+                 
+  //           </div>
+  //           <button id="Restart" >Clear</button>
+          
+  
+  // </div> `
+  //   }
+  //   else{
+  //     html = ` <form  class = "login_page">
+     
+  //     <h1>Login please </h1>
+          
+     
+     
+  //     <div class = "row">
+  //         <button id = "willLogin">Login</button>
+  //         <p id = "forgotLogin">Forgot passowrd</p>
+  //         <p id = "innocent">Already logged in to the FilterForces? </p>
+  //     </div>
+  // </form>
+  // `
+  //   }
+   
 
-LoadHTML();
 
     // if(LogGate)
     // {
@@ -49,121 +95,42 @@ LoadHTML();
     //     window.open("http://localhost:3000/login", '_blank').focus();
     //   })
     // }
-    console.log(LogGate)
-    if(containerMovements)
+    function LoadHTML()
     {
-      containerMovements.insertAdjacentHTML("afterbegin", html);
-      LogGate = document.getElementById("willLogin");
-      forgotGate = document.getElementById("forgotLogin");
-      //If trying to login
-      LogGate.addEventListener('click', (e) => {
-         e.preventDefault()
-         const email = document.querySelector('#email').value;
-         const password = document.querySelector('#password').value;
-         console.log({email: email, password: password})
-
-      })
-      forgotGate.addEventListener('click', (e) => {
-        e.preventDefault();
-        chrome.runtime.sendMessage({message: "forgot"},(response) => {
-
-        })
-       
-      })
+    html = `<div class="roundbox sidebox" style="height: auto;
+       width: auto;
       
-
-    }
-function LoadHTML() {
-  if (handle) {
-    //Content to display
+      padding: 20px;
     
-
-
-    //Check if logged
-    var loginStatus = localStorage.getItem('LOGIN')
-    
-    if (loginStatus === true) {
-      html = `<div class="roundbox sidebox" style="height: auto;
-     width: auto;
-    
-    padding: 20px;
-  
-     background-color: azure;
-     ">
-  <h1 id="pud">Time will go here</h1>
-             <p><span>Handle: </span>${handle}</p>
-             <br>
-             <p>Type : ${problemType}</p>
-             <br>
-             <p>Number : ${problemNo}</p>
-            <div class="Screen">
- 
-                <h1 id="Number">${timeStatus}</h1>
-            </div>
-            <div class="Controls">
-                 
-                   <img id="Buttn" src="${Imgsrc2}" alt="Chotusa imgae hu yaar">
-                 
-            </div>
-            <button id="Restart" >Clear</button>
-          
-  
-  </div> `
-    }
-    else{
-      html = ` <form  class = "login_page">
-      <div>
-      <h1>Login please </h1>
-          <label htmlFor="email">Email Address</label>
-          <input
-              type="text"
-              placeholder="Enter email address"
-              id="email"
-              
-              name="email"
-              />
-      </div>
-      <div>
-          <label htmlFor="password">Password</label>
-          <input
-              type="password"
-              placeholder="Enter your password"
-              id="password"
+       background-color: azure;
+       ">
+    <h1 id="pud">Time will go here</h1>
+               <p><span>Handle: </span>${handle}</p>
+               <br>
+               <p>Type : ${problemType}</p>
+               <br>
+               <p>Number : ${problemNo}</p>
+              <div class="Screen">
+   
+                  <h1 id="Number">${timeStatus}</h1>
+              </div>
+              <div class="Controls">
+                   
+                     <img id="Buttn" src="${Imgsrc2}" alt="Chotusa imgae hu yaar">
+                   
+              </div>
+              <button id="Restart" >Clear</button>
             
-              name="password"
-              />
-      </div>
-      <div class = "row">
-          <button id = "willLogin">Login</button>
-          <p id = "forgotLogin">Forgot passowrd</p>
-      </div>
-  </form>`
-    }
-   
-    //If login button is clicked
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
+    </div> `
+    
+   
   
  if(Restart)
  {
+   
   Restart.addEventListener("click", () => {
+    console.log("clicked")
     clearInterval(Interval);
     tArray = [00, 00, 00];
     Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
@@ -199,6 +166,70 @@ if(Button)
       }
       Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
     }
+  
   }
-}
+  LoadHTML();
+    if(containerMovements)
+    {
+      containerMovements.insertAdjacentHTML("afterbegin", html);
+    
+    //   LogGate = document.getElementById("willLogin");
+    //   forgotGate = document.getElementById("forgotLogin");
+    //   innocent = document.getElementById("innocent");
+    //   //If trying to login
+    //   LogGate.addEventListener('click', (e) => {
+    //      e.preventDefault()
+    //      chrome.runtime.sendMessage({message: "login"},(response) => {
+    //        if(response === true)
+    //        {
+    //          localStorage.setItem('sss', true);
+    //        }
+    //        console.log("data ", localStorage.getItem('sss'));
+    //        localStorage.setItem('LOGIN', true);
+    //     })
 
+    //   })
+    //   forgotGate.addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     chrome.runtime.sendMessage({message: "forgot"},(response) => {
+
+    //     })
+       
+    //   })
+    //   innocent.addEventListener('click', (e) => {
+    //     e.preventDefault();
+    //     html = `<div class="roundbox sidebox" style="height: auto;
+    //     width: auto;
+       
+    //    padding: 20px;
+     
+    //     background-color: azure;
+    //     ">
+    //  <h1 id="pud">Time will go here</h1>
+    //             <p><span>Handle: </span>${handle}</p>
+    //             <br>
+    //             <p>Type : ${problemType}</p>
+    //             <br>
+    //             <p>Number : ${problemNo}</p>
+    //            <div class="Screen">
+    
+    //                <h1 id="Number">${timeStatus}</h1>
+    //            </div>
+    //            <div class="Controls">
+                    
+    //                   <img id="Buttn" src="${Imgsrc2}" alt="Chotusa imgae hu yaar">
+                    
+    //            </div>
+    //            <button id="Restart" >Clear</button>
+             
+     
+    //              </div> `
+    //              localStorage.setItem('LOGIN', true);
+    //             //containerMovements.insertAdjacentHTML("afterbegin", html);
+            
+    //   window.location.reload();
+     
+    //   })
+      
+
+    }
