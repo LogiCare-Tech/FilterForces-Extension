@@ -38,40 +38,79 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
     if(request.message[0] === "Time")
     {
-        console.log("hi");
-        const doTheStuff = async()=>{
-           try{
+         const data = request.message[1];
+   
+       const getPset = async()=>{
+          try{
+            const apiReq = await  fetch('https://codeforces.com/api/problemset.problems', {
+                method: 'GET'
+               
+            })
+            const resPset = await apiReq.json();
+            
+            const allPset = resPset.result.problems;
+      
+            const infoRequired = allPset.filter((info) => Number(info.contestId) === Number(data.contestId) && (info.index === data.type))
+        
             const response = await fetch('http://localhost:3001/api/Users/refresh_token', {
                 method: 'POST',
                 credentials: 'include',
                 mode: 'cors'
             
             })
-            const json = await response.json();
-            console.log(json);
-           }
-           catch(Err)
-           {
-               console.log(Err);
-           }
-        }
-        doTheStuff();
+            const {access_token} = await response.json();
+           const filterInfo= infoRequired[0];
+           
+            const obj = {
+               
+                topic: [...filterInfo.tags],
+                rating: filterInfo.points,
+                time: data.time
+            }
+            
+            const redData = await fetch('http://localhost:3001/api/Visualize', {
+                method: 'POST',
+                headers: {
+                    'Authorization': access_token,
+                    'Accept': 'application/json, text/plain, */*',
+                   'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                mode: 'cors',
+                body: JSON.stringify(obj)
+            })
+            const d = await redData.json();
+            
+          }catch(Err){ console.log(Err)}
+       }
+       getPset();
+        
+        
+    
         sendResponse({message: "ghanta"})
     }
-    if(request.message === "forgot")
+    if(request.message === "Logout")
     {
-        chrome.tabs.create({
-            url: 'http://localhost:3000/forgotPassword',
-            active: false
-        }, function(tab) {
-            // After the tab has been created, open a window to inject the tab
-            chrome.windows.create({
-                tabId: tab.id,
-                type: 'popup',
-                focused: true
-                // incognito, top, left, ...
-            });
-        });
+       
+         
+          const LogingOut = async() => {
+            try{
+                const response = await fetch('http://localhost:3001/api/Users/logout', {
+                    method: 'GET',
+                    mode: 'cors',
+                    credentials: 'include'
+                });
+                const finalRes = await response.json();
+                  sendResponse(finalRes.msg);
+            }
+            catch(err) {
+                console.log(err);
+                sendResponse("Failed");
+            }
+          }
+          LogingOut();
+         
+       
     }
 })
 

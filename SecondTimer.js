@@ -1,31 +1,22 @@
 var links = document.getElementsByTagName("a");
 var arr = [];
+
 for (var i = 0; i < links.length; i++) {
   arr.push(links[i].href.split("/"));
-}
-// function storeUserPrefs() {
-//   var key = "myKey",
-//       testPrefs = "va:100"
-//   var jsonfile = {};
-//   jsonfile[key] = testPrefs;
-//   chrome.storage.sync.set(jsonfile, function () {
-//       console.log('Saved', key, testPrefs);
-//   });
 
-// }
-// storeUserPrefs();
-// chrome.storage.sync.get("myKey", (obj) => {
-//   console.log(obj)
-// })
+}
+
 var handle;
 var problemNo;
 var problemType;
+
 for (var i = 0; i < arr.length; i++) {
   if (arr[i][2] === "codeforces.com" && arr[i][3] === "profile") {
     handle = arr[i][4];
-    console.log(handle);
+
   }
   if (arr[i][4] === "problem") {
+
     if (arr[i][5]) {
       problemNo = arr[i][5];
       problemType = arr[i][6][0];
@@ -43,13 +34,12 @@ LoadHTML();
 function LoadHTML() {
   console.log("loaded")
   if (handle) {
-    
+
     var loginState = localStorage.getItem('LOGIN');
-   
-    
-    if(loginState === "LoginSuccess")
-    {
-      
+
+
+    if (loginState === "LoginSuccess") {
+
       html = `
               <div class="roundbox sidebox" style="height: auto;
               width: auto;
@@ -75,14 +65,15 @@ function LoadHTML() {
                      </div>
                      <button id="Restart" >Clear</button>
                      <button id = "sendTime"> Save</button>
+                     <button id = "Logout">Logout </button>
            
            </div> 
               
               `;
     }
-    else if(loginState === null){
-    
-              html = `   <div class = "login_page">
+    else if (loginState === null) {
+
+      html = `   <div class = "login_page">
               <div>
                   <label htmlFor="email">Email Address</label>
                   <input
@@ -111,8 +102,7 @@ function LoadHTML() {
           <p id = "formRegister">New to here? Register</p>
       </div>`
     }
-    else if(loginState === "formForgot")
-    {
+    else if (loginState === "formForgot") {
       html = `
       <div class = "login_page">
       <div>
@@ -132,8 +122,7 @@ function LoadHTML() {
       </div>
   </div>`
     }
-    else if(loginState === "formRegister")
-    {
+    else if (loginState === "formRegister") {
       html = `
       <div class="login_page">
       <h2>Register</h2>
@@ -188,8 +177,8 @@ function LoadHTML() {
   </div>
       `
     }
-    
-   
+
+
     var containerMovements = document.getElementById("sidebar");
     containerMovements.insertAdjacentHTML("afterbegin", html);
 
@@ -200,9 +189,9 @@ function LoadHTML() {
     var count = 0;
     var Interval;
     //const ImgsrcPause = chrome.extension.getURL("pause.png");
-   // const ImgsrcPlay = chrome.extension.getURL("play-button-arrowhead.png");
-      const ImgsrcPause = "";
-      const ImgsrcPlay = "";
+    // const ImgsrcPlay = chrome.extension.getURL("play-button-arrowhead.png");
+    const ImgsrcPause = "";
+    const ImgsrcPlay = "";
     //Login section
     var formLogin = document.getElementById("formLogin");
     var formForgot = document.getElementById("formForgot");
@@ -215,93 +204,109 @@ function LoadHTML() {
     var forgotAction = document.getElementById("formForgotAction");
     //Register section in action
     var registerAction = document.getElementById("formRegisterAction");
-  
-    
-    if(formLogin)
-    {
+
+    //Logout
+    var logoutAction = document.getElementById("Logout");
+    if (logoutAction) {
+      logoutAction.addEventListener('click', () => {
+        chrome.runtime.sendMessage({ message: "Logout" }, (response) => {
+          if (response == "Loging out") {
+            localStorage.removeItem('LOGIN');
+            window.location.reload();
+          }
+        })
+      })
+    }
+
+    if (formLogin) {
       formLogin.addEventListener("click", () => {
-       
+
         var payload = {
           email: email.value,
           password: password.value
         }
         console.log(payload);
-        chrome.runtime.sendMessage({message: ["login", payload]}, (response) => {
-          if(response.message === 'success')
-          {
-            localStorage.setItem('LOGIN',"LoginSuccess");
+        chrome.runtime.sendMessage({ message: ["login", payload] }, (response) => {
+          if (response.message === 'success') {
+            localStorage.setItem('LOGIN', "LoginSuccess");
             window.location.reload();
           }
-         // console.log("From the timer ",response.message)
+          // console.log("From the timer ",response.message)
         })
         // window.location.reload();
       })
     }
-    if(formForgot)
-    {
+    if (formForgot) {
       formForgot.addEventListener('click', () => {
         localStorage.setItem('LOGIN', "formForgot");
         window.location.reload();
       })
     }
-    if(forgotAction)
-    {
+    if (forgotAction) {
       forgotAction.addEventListener('click', () => {
-        let payload = {email: email.value}
+        let payload = { email: email.value }
         console.log(payload);
-        
+
         localStorage.removeItem('LOGIN')
         window.location.reload();
       })
     }
 
     //Register section
-    if(formRegister)
-    {
+    if (formRegister) {
       formRegister.addEventListener('click', () => {
         localStorage.setItem('LOGIN', "formRegister");
         window.location.reload();
       })
     }
-   
 
-    
+
+
     var tArray = [00, 00, 00];
-    if(sendTime)
-    {
+    let temp = "";
+    temp += tArray[0];
+    temp += ":";
+    temp += tArray[1];
+    temp += ":";
+    temp += tArray[2];
+    if (sendTime) {
+      let Payload = {
+        contestId: problemNo,
+        type: problemType,
+        time: temp
+      }
       sendTime.addEventListener('click', () => {
-        console.log("hi");
-          chrome.runtime.sendMessage({message:["Time",tArray]}, (response) => {
-            console.log(response.message);
-          })
+
+        chrome.runtime.sendMessage({ message: ["Time", Payload] }, (response) => {
+          console.log(response.message);
+        })
+
       })
     }
-if(Restart)
-{
-  Restart.addEventListener("click", () => {
-    clearInterval(Interval);
-    tArray = [00, 00, 00];
-    Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
-    Button.src = ImgsrcPlay;
-  });
-}
-    
-
-   if(Button)
-   {
-    Button.addEventListener("click", function changeImage() {
-      if (Button.src === ImgsrcPlay) {
-        Button.src = ImgsrcPause;
-
-        Interval = setInterval(Increment, 1000);
-      } else {
-        Button.src = ImgsrcPlay;
+    if (Restart) {
+      Restart.addEventListener("click", () => {
         clearInterval(Interval);
-      }
-    });
-   }
+        tArray = [00, 00, 00];
+        Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
+        Button.src = ImgsrcPlay;
+      });
+    }
+
+
+    if (Button) {
+      Button.addEventListener("click", function changeImage() {
+        if (Button.src === ImgsrcPlay) {
+          Button.src = ImgsrcPause;
+
+          Interval = setInterval(Increment, 1000);
+        } else {
+          Button.src = ImgsrcPlay;
+          clearInterval(Interval);
+        }
+      });
+    }
     function Increment() {
-      //    count++;
+
 
       tArray[2]++;
       if (tArray[2] === 60) {
