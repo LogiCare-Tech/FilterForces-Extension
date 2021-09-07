@@ -1,3 +1,4 @@
+//Collecting basic Info from the page
 var links = document.getElementsByTagName("a");
 var arr = [];
 
@@ -5,6 +6,7 @@ for (var i = 0; i < links.length; i++) {
   arr.push(links[i].href.split("/"));
 
 }
+
 
 var handle;
 var problemNo;
@@ -16,23 +18,45 @@ for (var i = 0; i < arr.length; i++) {
 
   }
   if (arr[i][4] === "problem") {
-
+     
     if (arr[i][5]) {
       problemNo = arr[i][5];
-      problemType = arr[i][6][0];
+      let temp = "";
+      for(let data of arr[i][6])
+      {
+        if(data !== "?")
+        {
+          temp += data;
+        }else{
+          break;
+        }
+      }
+      problemType = temp;
+      
     }
   }
 }
-//  const Imgsrc1 = chrome.extension.getURL("pause.png");
-//  const Imgsrc2 = chrome.extension.getURL("play-button-arrowhead.png");
-const Imgsrc1 = "";
-const Imgsrc2 = "";
+ const Imgsrc1 = chrome.runtime.getURL("pause.png");
+ const Imgsrc2 = chrome.runtime.getURL("play-button-arrowhead.png");
+
 var timeStatus = "0 : 0 : 0";
+if(localStorage.getItem(problemNo + problemType))
+{
+ let time = localStorage.getItem(problemNo + problemType).split(',');
+ let temp = "";
+ temp += time[0];
+ temp += " : ";
+ temp += time[1];
+ temp += " : ";
+ temp += time[2];
+ timeStatus = temp;
+  
+}
 var html = ``;
 LoadHTML();
 
 function LoadHTML() {
-  console.log("loaded")
+ 
   if (handle) {
 
     var loginState = localStorage.getItem('LOGIN');
@@ -60,7 +84,7 @@ function LoadHTML() {
                      </div>
                      <div class="Controls">
                           
-                           
+                     <img id="Buttn" src="${Imgsrc2}" alt="Chotusa imgae hu yaar">
                           
                      </div>
                      <button id="Restart" >Clear</button>
@@ -102,83 +126,12 @@ function LoadHTML() {
           <p id = "formRegister">New to here? Register</p>
       </div>`
     }
-    else if (loginState === "formForgot") {
-      html = `
-      <div class = "login_page">
-      <div>
-          <label htmlFor="email">Email Address</label>
-          <input
-              type="text"
-              placeholder="Enter email address"
-              class="email"
-              
-              name="email"
-              />
-      </div>
-     
-      <div class= "row">
-          <button id = "formForgotAction">Submit</button>
-         
-      </div>
-  </div>`
-    }
-    else if (loginState === "formRegister") {
-      html = `
-      <div class="login_page">
-      <h2>Register</h2>
-     
-      <div>
-      <div>
-              <label htmlFor="name">Name</label>
-              <input
-                  type="text"
-                  placeholder="Enter your name"
-                  id="name"
-                
-                  name="name"
-                 />
-          </div>
-          <div>
-              <label htmlFor="email">Email Address</label>
-              <input
-                  type="text"
-                  placeholder="Enter email address"
-                  id="email"
-                 
-                  name="email"
-                  />
-          </div>
-          <div>
-              <label htmlFor="password">Password</label>
-              <input
-                  type="password"
-                  placeholder="Enter your password"
-                  id="password"
-                 
-                  name="password"
-                  />
-          </div>
-          <div>
-              <label htmlFor="cf_assword">Confirm Password</label>
-              <input
-                  type="password"
-                  placeholder="Confirm your password"
-                  id="cf_password"
-                 
-                  name="cf_password"
-                 />
-          </div>
-          <div class = "row">
-              <button id = "formRegisterAction">Register</button>
-            
-          </div>
-      </div>
- 
-  </div>
-      `
-    }
+    
 
-
+    if(sessionStorage.getItem("is_reloaded")){
+      console.log(sessionStorage.getItem("is_reloaded"))
+    }
+    
     var containerMovements = document.getElementById("sidebar");
     containerMovements.insertAdjacentHTML("afterbegin", html);
 
@@ -186,24 +139,19 @@ function LoadHTML() {
     var Button = document.getElementById("Buttn");
     var Restart = document.getElementById("Restart");
     var Time = document.getElementById("Number");
-    var count = 0;
+   
     var Interval;
-    //const ImgsrcPause = chrome.extension.getURL("pause.png");
-    // const ImgsrcPlay = chrome.extension.getURL("play-button-arrowhead.png");
-    const ImgsrcPause = "";
-    const ImgsrcPlay = "";
+    const ImgsrcPause = chrome.runtime.getURL("pause.png");
+    const ImgsrcPlay = chrome.runtime.getURL("play-button-arrowhead.png");
+    
     //Login section
     var formLogin = document.getElementById("formLogin");
-    var formForgot = document.getElementById("formForgot");
-    var formRegister = document.getElementById("formRegister");
+    
     var email = document.querySelector('.email');
     var password = document.querySelector('.password');
 
     var sendTime = document.getElementById('sendTime');
-    //Forgot section in action
-    var forgotAction = document.getElementById("formForgotAction");
-    //Register section in action
-    var registerAction = document.getElementById("formRegisterAction");
+ 
 
     //Logout
     var logoutAction = document.getElementById("Logout");
@@ -225,7 +173,7 @@ function LoadHTML() {
           email: email.value,
           password: password.value
         }
-        console.log(payload);
+       
         chrome.runtime.sendMessage({ message: ["login", payload] }, (response) => {
           if (response.message === 'success') {
             localStorage.setItem('LOGIN', "LoginSuccess");
@@ -236,38 +184,23 @@ function LoadHTML() {
         // window.location.reload();
       })
     }
-    if (formForgot) {
-      formForgot.addEventListener('click', () => {
-        localStorage.setItem('LOGIN', "formForgot");
-        window.location.reload();
-      })
-    }
-    if (forgotAction) {
-      forgotAction.addEventListener('click', () => {
-        let payload = { email: email.value }
-        console.log(payload);
-
-        localStorage.removeItem('LOGIN')
-        window.location.reload();
-      })
-    }
-
-    //Register section
-    if (formRegister) {
-      formRegister.addEventListener('click', () => {
-        localStorage.setItem('LOGIN', "formRegister");
-        window.location.reload();
-      })
-    }
+    
 
 
-
+    //Timer Working Logic
     var tArray = [00, 00, 00];
+   
+    if(localStorage.getItem(problemNo + problemType))
+    {
+      let time = localStorage.getItem(problemNo + problemType).split(',');
+      tArray = time;
+      
+    }
     let temp = "";
     temp += tArray[0];
-    temp += ":";
+    temp += " : ";
     temp += tArray[1];
-    temp += ":";
+    temp += " : ";
     temp += tArray[2];
     if (sendTime) {
       let Payload = {
@@ -288,6 +221,8 @@ function LoadHTML() {
         clearInterval(Interval);
         tArray = [00, 00, 00];
         Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
+        localStorage.removeItem(problemNo + problemType);
+        localStorage.removeItem(problemNo + problemType + "StartTime");
         Button.src = ImgsrcPlay;
       });
     }
@@ -318,6 +253,20 @@ function LoadHTML() {
         }
       }
       Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
+      if(!localStorage.getItem(problemNo + problemType + "StartTime"))
+      {
+        const dateToday = new Date()
+        const timestamp = epoch(dateToday)
+        
+        localStorage.setItem(problemNo + problemType + "StartTime",timestamp / 1000); 
+      }
+      localStorage.setItem(problemNo + problemType, tArray);
+     
     }
   }
 }
+function epoch (date) {
+  return Date.parse(date)
+}
+sessionStorage.setItem("is_reloaded", true);
+

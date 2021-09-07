@@ -1,6 +1,4 @@
-let user_signed_in = false;
-
-
+//Remove Start time from local Storage as soon as POST request.
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if(request.message[0] === "login")
     {

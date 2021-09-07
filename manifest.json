@@ -16,8 +16,16 @@
     "host_permissions": [
          "http://localhost:3001/*"
          
-    ]
-     ,
+         
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["pause.png",
+                "play-button-arrowhead.png"],
+                "matches": ["https://codeforces.com/*"]
+        }
+        
+    ],
        "icons": { 
               
            "48": "Logo.png",
