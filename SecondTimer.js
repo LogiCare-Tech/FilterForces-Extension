@@ -1,8 +1,6 @@
 
 localStorage.setItem("PROBLEM", document.getElementsByClassName("title")[0].innerText);
 
-//console.log(localStorage.getItem(localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE")));
-//Collecting basic Info from the page
 var links = document.getElementsByTagName("a");
 var arr = [];
 
@@ -93,7 +91,7 @@ function LoadHTML() {
                           
                      </div>
                      <button id="Restart" >Clear</button>
-                     <button id = "sendTime"> Save</button>
+                    
                      <button id = "Logout">Logout </button>
            
            </div> 
@@ -153,7 +151,7 @@ function LoadHTML() {
     var email = document.querySelector('.email');
     var password = document.querySelector('.password');
 
-    var sendTime = document.getElementById('sendTime');
+   
  
 
     //Logout
@@ -162,9 +160,12 @@ function LoadHTML() {
     if (logoutAction) {
       logoutAction.addEventListener('click', () => {
         chrome.runtime.sendMessage({ message: "Logout" }, (response) => {
-          if (response == "success") {
+          if (response =="Loging out") {
             localStorage.removeItem('LOGIN');
             window.location.reload();
+          }
+          else{
+            alert(response);
           }
         })
       })
@@ -179,13 +180,18 @@ function LoadHTML() {
         }
        
         chrome.runtime.sendMessage({ message: ["login", payload] }, (response) => {
-          if (response.message === 'success') {
+       
+          if (response === "Login successful") {
             localStorage.setItem('LOGIN', "LoginSuccess");
             window.location.reload();
           }
-          // console.log("From the timer ",response.message)
+          else{
+            alert(response);
+           
+          }
+         
         })
-        // window.location.reload();
+       
       })
     }
     
@@ -200,17 +206,7 @@ function LoadHTML() {
       tArray = time;
       
     }
-    let temp = "";
-    temp += tArray[0];
-    temp += " : ";
-    temp += tArray[1];
-    temp += " : ";
-    temp += tArray[2];
- 
-
-
-   
-    
+  
     
     if (Restart) {
       Restart.addEventListener("click", () => {
@@ -259,7 +255,7 @@ function LoadHTML() {
       }
       localStorage.setItem(problemNo + problemType, tArray);
       localStorage.setItem("CURRENT_ACTIVE_PROBLEM", localStorage.getItem("PROBLEM"));
-      ////localStorage.setItem("CURRENT_ACTIVE_ID", localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE"));
+      
      
     }
   }

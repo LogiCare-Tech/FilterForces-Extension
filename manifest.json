@@ -9,12 +9,14 @@
         "activeTab",
         "tabs",
         "storage",
-        "cookies"
+        "cookies", 
+        "webRequest"
         
         
     ],
     "host_permissions": [
-         "http://localhost:3001/*"
+         "http://localhost:3001/*",
+         "<all_urls>"
          
          
     ],
@@ -39,7 +41,7 @@
                   
            },
            {
-               "matches": ["https://codeforces.com/problemset/status/*", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on"],
+               "matches": ["https://codeforces.com/problemset/status?", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on", "https://codeforces.com/contest/*","https://codeforces.com/contest/1567/my"],
                "js": ["sendTime.js"],
                "css": ["containerTimer.css"]
            }
