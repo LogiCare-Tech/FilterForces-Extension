@@ -37,6 +37,11 @@
                   "js":["SecondTimer.js"],
                   "css": ["styles.css"]
                   
+           },
+           {
+               "matches": ["https://codeforces.com/problemset/status/*", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on"],
+               "js": ["sendTime.js"],
+               "css": ["containerTimer.css"]
            }
     ],
     "background": {

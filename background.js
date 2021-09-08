@@ -99,16 +99,68 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     credentials: 'include'
                 });
                 const finalRes = await response.json();
-                  sendResponse(finalRes.msg);
+                 console.log(finalRes)
             }
             catch(err) {
                 console.log(err);
-                sendResponse("Failed");
+                
             }
           }
           LogingOut();
-         
+          sendResponse("success");
        
+    }
+    if(request.message[0] === "FetchPset")
+    {
+        const PAYLOAD = request.message[1];
+        const getPersonalPset = async () => {
+            const data = await fetch(`https://codeforces.com/api/user.status?handle=${PAYLOAD.handle}`, {
+              method: 'GET',
+              mode: 'cors',
+              credentials: 'include'
+            })
+            let convertedData = await data.json();
+            console.log(convertedData.result)
+            let PostQn = convertedData.result.filter((info) => {
+                return (
+                        info.problem.index === PAYLOAD.type && 
+                        PAYLOAD.startTime <= info.creationTimeSeconds )
+            })
+
+           
+            const response = await fetch('http://localhost:3001/api/Users/refresh_token', {
+                method: 'POST',
+                credentials: 'include',
+                mode: 'cors'
+            
+            })
+            const {access_token} = await response.json();
+            const filterInfo= PostQn[0];
+          
+            const obj = {
+               
+                topic: [...filterInfo.problem.tags],
+                rating: filterInfo.problem.points,
+                time: PAYLOAD.time,
+                type: PAYLOAD.type
+            }
+            
+            const redData = await fetch('http://localhost:3001/api/Visualize', {
+                method: 'POST',
+                headers: {
+                    'Authorization': access_token,
+                    'Accept': 'application/json, text/plain, */*',
+                   'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                mode: 'cors',
+                body: JSON.stringify(obj)
+            })
+            const d = await redData.json();
+            console.log(d)
+          }
+          getPersonalPset();
+          sendResponse("success")
     }
 })
 

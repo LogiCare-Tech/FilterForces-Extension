@@ -1,3 +1,7 @@
+
+localStorage.setItem("PROBLEM", document.getElementsByClassName("title")[0].innerText);
+
+//console.log(localStorage.getItem(localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE")));
 //Collecting basic Info from the page
 var links = document.getElementsByTagName("a");
 var arr = [];
@@ -15,7 +19,7 @@ var problemType;
 for (var i = 0; i < arr.length; i++) {
   if (arr[i][2] === "codeforces.com" && arr[i][3] === "profile") {
     handle = arr[i][4];
-
+    localStorage.setItem("HANDLE", handle);
   }
   if (arr[i][4] === "problem") {
      
@@ -32,7 +36,8 @@ for (var i = 0; i < arr.length; i++) {
         }
       }
       problemType = temp;
-      
+      localStorage.setItem("PROBLEM_NO", problemNo);
+      localStorage.setItem("PROBLEM_TYPE", problemType);
     }
   }
 }
@@ -128,9 +133,7 @@ function LoadHTML() {
     }
     
 
-    if(sessionStorage.getItem("is_reloaded")){
-      console.log(sessionStorage.getItem("is_reloaded"))
-    }
+
     
     var containerMovements = document.getElementById("sidebar");
     containerMovements.insertAdjacentHTML("afterbegin", html);
@@ -155,10 +158,11 @@ function LoadHTML() {
 
     //Logout
     var logoutAction = document.getElementById("Logout");
+    
     if (logoutAction) {
       logoutAction.addEventListener('click', () => {
         chrome.runtime.sendMessage({ message: "Logout" }, (response) => {
-          if (response == "Loging out") {
+          if (response == "success") {
             localStorage.removeItem('LOGIN');
             window.location.reload();
           }
@@ -202,20 +206,12 @@ function LoadHTML() {
     temp += tArray[1];
     temp += " : ";
     temp += tArray[2];
-    if (sendTime) {
-      let Payload = {
-        contestId: problemNo,
-        type: problemType,
-        time: temp
-      }
-      sendTime.addEventListener('click', () => {
+ 
 
-        chrome.runtime.sendMessage({ message: ["Time", Payload] }, (response) => {
-          console.log(response.message);
-        })
 
-      })
-    }
+   
+    
+    
     if (Restart) {
       Restart.addEventListener("click", () => {
         clearInterval(Interval);
@@ -223,6 +219,7 @@ function LoadHTML() {
         Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
         localStorage.removeItem(problemNo + problemType);
         localStorage.removeItem(problemNo + problemType + "StartTime");
+        localStorage.removeItem("CURRENT_ACTIVE_PROBLEM");
         Button.src = ImgsrcPlay;
       });
     }
@@ -261,6 +258,8 @@ function LoadHTML() {
         localStorage.setItem(problemNo + problemType + "StartTime",timestamp / 1000); 
       }
       localStorage.setItem(problemNo + problemType, tArray);
+      localStorage.setItem("CURRENT_ACTIVE_PROBLEM", localStorage.getItem("PROBLEM"));
+      ////localStorage.setItem("CURRENT_ACTIVE_ID", localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE"));
      
     }
   }
@@ -268,5 +267,5 @@ function LoadHTML() {
 function epoch (date) {
   return Date.parse(date)
 }
-sessionStorage.setItem("is_reloaded", true);
+
 

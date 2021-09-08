@@ -1,0 +1,18 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css");
+
+.ContainerTimer{
+    background-color: rgb(255, 255, 255);
+     
+    margin-left: 8px;
+}
+#SignAdd{
+    background-color: black;
+    margin-left: 10px;
+    cursor: pointer;
+}
+#SignCancel{
+    background-color: black;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
