@@ -41,7 +41,7 @@
                   
            },
            {
-               "matches": ["https://codeforces.com/problemset/status?", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on", "https://codeforces.com/contest/*","https://codeforces.com/contest/1567/my"],
+               "matches": ["https://codeforces.com/problemset/status?", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on", "https://codeforces.com/contest/*"],
                "js": ["sendTime.js"],
                "css": ["containerTimer.css"]
            }

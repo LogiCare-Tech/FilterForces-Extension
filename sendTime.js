@@ -1,3 +1,22 @@
+var links = document.getElementsByTagName("a");
+var arr = [];
+
+for (var i = 0; i < links.length; i++) {
+  arr.push(links[i].href.split("/"));
+
+}
+
+
+var handle;
+var problemNo;
+var problemType;
+
+for (var i = 0; i < arr.length; i++) {
+  if (arr[i][2] === "codeforces.com" && arr[i][3] === "profile") {
+    handle = arr[i][4];
+    localStorage.setItem("HANDLE", handle);
+  }
+}
 let SecondLevelMenu = document.getElementsByClassName("second-level-menu-list");
 
 
@@ -28,7 +47,7 @@ function INSERT() {
           contestId: localStorage.getItem("PROBLEM_NO"),
           type: localStorage.getItem("PROBLEM_TYPE"),
           time: localStorage.getItem(localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE")),
-          handle: localStorage.getItem("HANDLE"),
+          handle: handle,
           startTime: localStorage.getItem(localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE") + "StartTime")
         }
 
