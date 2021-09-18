@@ -1,5 +1,4 @@
 //Remove Start time from local Storage as soon as POST request.
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message[0] === "login") {
 
@@ -79,6 +78,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 let PostQn = convertedData.result.filter((info) => {
                     return (
                         info.problem.index === PAYLOAD.type &&
+                        Number(info.problem.contestId) === Number(PAYLOAD.contestId) && 
                         PAYLOAD.startTime <= info.creationTimeSeconds &&
                         info.verdict === "OK")
                 })
@@ -95,16 +95,30 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     })
                     const { access_token } = await response.json();
                     const filterInfo = PostQn[0];
-
-                    const obj = {
+                    let ProblemsInfo = await fetch('https://codeforces.com/api/problemset.problems',{
+                        method: 'GET',
+                        mode: 'cors',
+                        credentials: 'include'
+                    })
+                    ProblemsInfo = await ProblemsInfo.json()
+                    ProblemsInfo = ProblemsInfo.result.problems 
+                    let RatingInfo = ProblemsInfo.filter((info) => Number(info.contestId) === Number(PAYLOAD.contestId) && info.index === PAYLOAD.type)
+                    RatingInfo = RatingInfo[0]
+                
+                   console.log(RatingInfo)
+                    let obj = {
 
                         topic: [...filterInfo.problem.tags],
-                        rating: filterInfo.problem.points,
+                     
                         time: String(inSeconds),
                         type: PAYLOAD.type,
                         handle: PAYLOAD.handle
                     }
-
+                    if(RatingInfo.rating)
+                    {
+                        obj["rating"] = Number(RatingInfo.rating)
+                    }
+                    console.log(obj)
                     try {
                         const redData = await fetch('https://filterforces.herokuapp.com/api/Visualize', {
                             method: 'POST',

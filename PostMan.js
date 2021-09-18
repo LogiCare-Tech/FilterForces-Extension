@@ -48,6 +48,7 @@ function INSERT() {
           type: localStorage.getItem("PROBLEM_TYPE"),
           time: localStorage.getItem(localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE")),
           handle: handle,
+          
           startTime: localStorage.getItem(localStorage.getItem("PROBLEM_NO") + localStorage.getItem("PROBLEM_TYPE") + "StartTime")
         }
 
