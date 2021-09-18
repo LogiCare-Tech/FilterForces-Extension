@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 var data = new FormData();
 
                 data.append("json", JSON.stringify(obj));
-                let response = await fetch('http://localhost:3001/api/Users/login', {
+                let response = await fetch('https://filterforces.herokuapp.com/api/Users/login', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
@@ -41,22 +41,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 
     if (request.message === "Logout") {
-
+        
 
         const LogingOut = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/Users/logout', {
-                    method: 'GET',
-                    mode: 'cors',
-                    credentials: 'include'
+                const response = await fetch('https://filterforces.herokuapp.com/api/Users/logout', {
+                    method: 'GET'
                 });
-                const finalRes = await response.json();
-               
-                sendResponse(finalRes.msg);
+              
+                 sendResponse(response.status);
 
             }
             catch (err) {
-             
+                
                 sendResponse(err);
             }
         }
@@ -91,7 +88,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     }
 
                     try {
-                        const response = await fetch('http://localhost:3001/api/Users/refresh_token', {
+                        const response = await fetch('https://filterforces.herokuapp.com/api/Users/refresh_token', {
                             method: 'POST',
                             credentials: 'include',
                             mode: 'cors'
@@ -110,7 +107,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         }
 
                         try {
-                            const redData = await fetch('http://localhost:3001/api/Visualize', {
+                            const redData = await fetch('https://filterforces.herokuapp.com/api/Visualize', {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': access_token,

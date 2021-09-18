@@ -16,6 +16,7 @@
     ],
     "host_permissions": [
          "http://localhost:3001/*",
+         "https://filterforces.herokuapp.com/*",
          "<all_urls>"
          
          
@@ -41,7 +42,7 @@
                   
            },
            {
-               "matches": ["https://codeforces.com/problemset/status?", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on", "https://codeforces.com/contest/*"],
+               "matches": ["https://codeforces.com/problemset/status?", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on", "https://codeforces.com/contest/*/submit", "https://codeforces.com/contest/*/my"],
                "js": ["sendTime.js"],
                "css": ["containerTimer.css"]
            }

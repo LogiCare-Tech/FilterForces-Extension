@@ -159,9 +159,13 @@ function LoadHTML() {
     
     if (logoutAction) {
       logoutAction.addEventListener('click', () => {
-        chrome.runtime.sendMessage({ message: "Logout" }, (response) => {
-          if (response =="Loging out") {
+        chrome.runtime.sendMessage({ message: "Logout"}, (response) => {
+          console.log(response)
+          if (response == 200) {
             localStorage.removeItem('LOGIN');
+            localStorage.removeItem("HANDLE");
+            localStorage.removeItem("PROBLEM");
+            localStorage.removeItem("PROBLEM_TYPE");
             window.location.reload();
           }
           else{
