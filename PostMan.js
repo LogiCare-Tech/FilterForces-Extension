@@ -33,7 +33,7 @@ function INSERT() {
       </span>
     
       `
-      
+
     let Parent = SecondLevelMenu[0];
     let ChildrenCnt = Parent.children.length;
 
@@ -42,7 +42,7 @@ function INSERT() {
     let Cancel = document.getElementById("SignCancel");
     if (Add) {
       Add.addEventListener("click", () => {
-      
+
         let Payload = {
           contestId: localStorage.getItem("PROBLEM_NO"),
           type: localStorage.getItem("PROBLEM_TYPE"),
@@ -53,27 +53,27 @@ function INSERT() {
 
 
         chrome.runtime.sendMessage({ message: ["FetchPset", Payload] }, (response) => {
-           
-      console.log(response)
+
+          console.log(response)
           if (response == 201) {
             console.log("hi");
             alert("Successfull");
             localStorage.removeItem("CURRENT_ACTIVE_PROBLEM");
             let firstKey = localStorage.getItem("PROBLEM_NO");
             let secondKey = localStorage.getItem("PROBLEM_TYPE");
-        localStorage.removeItem(firstKey + secondKey);
-        localStorage.removeItem(firstKey + secondKey + "StartTime");
-        
-         window.location.reload();
+            localStorage.removeItem(firstKey + secondKey);
+            localStorage.removeItem(firstKey + secondKey + "StartTime");
+
+            window.location.reload();
           }
-          else if(response == 401){
+          else if (response == 401) {
             alert("Please post using the handle which you gave while registering to the FilterForces");
             alert("When you logout, the time recorder for solving this question will be deleted.. Please start from the beginning");
-            
+
             window.location.reload();
-           
+
           }
-          else{
+          else {
             alert(response);
 
             window.location.reload();
@@ -85,16 +85,16 @@ function INSERT() {
       })
 
     }
-    if(Cancel){
+    if (Cancel) {
       Cancel.addEventListener("click", () => {
         alert(`Deleted the information about ${localStorage.getItem("CURRENT_ACTIVE_PROBLEM")}`)
         localStorage.removeItem("CURRENT_ACTIVE_PROBLEM");
         let firstKey = localStorage.getItem("PROBLEM_NO");
         let secondKey = localStorage.getItem("PROBLEM_TYPE");
-    localStorage.removeItem(firstKey + secondKey);
-    localStorage.removeItem(firstKey + secondKey + "StartTime");
-        
-         window.location.reload();
+        localStorage.removeItem(firstKey + secondKey);
+        localStorage.removeItem(firstKey + secondKey + "StartTime");
+
+        window.location.reload();
       })
     }
   }

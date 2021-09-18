@@ -20,16 +20,14 @@ for (var i = 0; i < arr.length; i++) {
     localStorage.setItem("HANDLE", handle);
   }
   if (arr[i][4] === "problem") {
-     
+
     if (arr[i][5]) {
       problemNo = arr[i][5];
       let temp = "";
-      for(let data of arr[i][6])
-      {
-        if(data !== "?")
-        {
+      for (let data of arr[i][6]) {
+        if (data !== "?") {
           temp += data;
-        }else{
+        } else {
           break;
         }
       }
@@ -39,27 +37,26 @@ for (var i = 0; i < arr.length; i++) {
     }
   }
 }
- const Imgsrc1 = chrome.runtime.getURL("/Assets/pause.png");
- const Imgsrc2 = chrome.runtime.getURL("/Assets/play-button-arrowhead.png");
+const Imgsrc1 = chrome.runtime.getURL("/Assets/pause.png");
+const Imgsrc2 = chrome.runtime.getURL("/Assets/play-button-arrowhead.png");
 
 var timeStatus = "0 : 0 : 0";
-if(localStorage.getItem(problemNo + problemType))
-{
- let time = localStorage.getItem(problemNo + problemType).split(',');
- let temp = "";
- temp += time[0];
- temp += " : ";
- temp += time[1];
- temp += " : ";
- temp += time[2];
- timeStatus = temp;
-  
+if (localStorage.getItem(problemNo + problemType)) {
+  let time = localStorage.getItem(problemNo + problemType).split(',');
+  let temp = "";
+  temp += time[0];
+  temp += " : ";
+  temp += time[1];
+  temp += " : ";
+  temp += time[2];
+  timeStatus = temp;
+
 }
 var html = ``;
 LoadHTML();
 
 function LoadHTML() {
- 
+
   if (handle) {
 
     var loginState = localStorage.getItem('LOGIN');
@@ -145,10 +142,10 @@ function LoadHTML() {
        
       </div>`
     }
-    
 
 
-    
+
+
     var containerMovements = document.getElementById("sidebar");
     containerMovements.insertAdjacentHTML("afterbegin", html);
 
@@ -156,26 +153,26 @@ function LoadHTML() {
     var Button = document.getElementById("Buttn");
     var Restart = document.getElementById("Restart");
     var Time = document.getElementById("Number");
-   
+
     var Interval;
     const ImgsrcPause = chrome.runtime.getURL("/Assets/pause.png");
     const ImgsrcPlay = chrome.runtime.getURL("/Assets/play-button-arrowhead.png");
-    
+
     //Login section
     var formLogin = document.getElementById("formLogin");
-    
+
     var email = document.querySelector('.email');
     var password = document.querySelector('.password');
 
-   
- 
+
+
 
     //Logout
     var logoutAction = document.getElementById("Logout");
-    
+
     if (logoutAction) {
       logoutAction.addEventListener('click', () => {
-        chrome.runtime.sendMessage({ message: "Logout"}, (response) => {
+        chrome.runtime.sendMessage({ message: "Logout" }, (response) => {
           console.log(response)
           if (response == 200) {
             localStorage.removeItem('LOGIN');
@@ -184,7 +181,7 @@ function LoadHTML() {
             localStorage.removeItem("PROBLEM_TYPE");
             window.location.reload();
           }
-          else{
+          else {
             alert(response);
           }
         })
@@ -198,36 +195,35 @@ function LoadHTML() {
           email: email.value,
           password: password.value
         }
-       
+
         chrome.runtime.sendMessage({ message: ["login", payload] }, (response) => {
-       
+
           if (response === "Login successful") {
             localStorage.setItem('LOGIN', "LoginSuccess");
             window.location.reload();
           }
-          else{
+          else {
             alert(response);
-           
+
           }
-         
+
         })
-       
+
       })
     }
-    
+
 
 
     //Timer Working Logic
     var tArray = [00, 00, 00];
-   
-    if(localStorage.getItem(problemNo + problemType))
-    {
+
+    if (localStorage.getItem(problemNo + problemType)) {
       let time = localStorage.getItem(problemNo + problemType).split(',');
       tArray = time;
-      
+
     }
-  
-    
+
+
     if (Restart) {
       Restart.addEventListener("click", () => {
         clearInterval(Interval);
@@ -266,21 +262,20 @@ function LoadHTML() {
         }
       }
       Time.innerText = tArray[0] + " : " + tArray[1] + " : " + tArray[2];
-      if(!localStorage.getItem(problemNo + problemType + "StartTime"))
-      {
+      if (!localStorage.getItem(problemNo + problemType + "StartTime")) {
         const dateToday = new Date()
         const timestamp = epoch(dateToday)
-        
-        localStorage.setItem(problemNo + problemType + "StartTime",timestamp / 1000); 
+
+        localStorage.setItem(problemNo + problemType + "StartTime", timestamp / 1000);
       }
       localStorage.setItem(problemNo + problemType, tArray);
       localStorage.setItem("CURRENT_ACTIVE_PROBLEM", localStorage.getItem("PROBLEM"));
-      
-     
+
+
     }
   }
 }
-function epoch (date) {
+function epoch(date) {
   return Date.parse(date)
 }
 
