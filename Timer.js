@@ -39,8 +39,8 @@ for (var i = 0; i < arr.length; i++) {
     }
   }
 }
- const Imgsrc1 = chrome.runtime.getURL("pause.png");
- const Imgsrc2 = chrome.runtime.getURL("play-button-arrowhead.png");
+ const Imgsrc1 = chrome.runtime.getURL("/Assets/pause.png");
+ const Imgsrc2 = chrome.runtime.getURL("/Assets/play-button-arrowhead.png");
 
 var timeStatus = "0 : 0 : 0";
 if(localStorage.getItem(problemNo + problemType))
@@ -73,14 +73,17 @@ function LoadHTML() {
              
              padding: 20px;
            
-              background-color: azure;
+             
+              color: "black";
               ">
-           <h1 id="pud">Time will go here</h1>
-                      <p><span>Handle: </span>${handle}</p>
+              <h2 id = "pud"><img class = "SVG" src = "https://lh3.googleusercontent.com/whWdCHvpK52qWkxadxxRiATHijar8KkJZCHtmwa3KeLyzf1hT3jqIGKE5FTJvvrmWWxneg1CGQ7VuQ624HKy=s72-rwa" alt = "SVG"/> Filter <span class = "HalfLogo"> Forces</span></h2>
+           <br>
+                      <h5><span>Handle: </span>${handle}</h5>
                       <br>
-                      <p>Type : ${problemType}</p>
+                      <h5>Type : ${problemType}</h5>
                       <br>
-                      <p>Number : ${problemNo}</p>
+                      <h5>Number : ${problemNo}</h5>
+                      <br>
                      <div class="Screen">
        
                          <h1 id="Number">${timeStatus}</h1>
@@ -90,9 +93,11 @@ function LoadHTML() {
                      <img id="Buttn" src="${Imgsrc2}" alt="Chotusa imgae hu yaar">
                           
                      </div>
+                     <div class = "Mainrow">
                      <button id="Restart" >Clear</button>
                     
                      <button id = "Logout">Logout </button>
+                     </div>
            
            </div> 
               
@@ -100,15 +105,24 @@ function LoadHTML() {
     }
     else if (loginState === null) {
 
-      html = `   <div class = "login_page">
+      html = `   <div class="roundbox sidebox login_page" style="height: auto;
+      width: auto;
+     
+     padding: 20px;
+   
+     
+      color: "black";
+      ">
+     
               <div>
+              <h2 class = "cat"><img class = "SVG" src = "https://lh3.googleusercontent.com/whWdCHvpK52qWkxadxxRiATHijar8KkJZCHtmwa3KeLyzf1hT3jqIGKE5FTJvvrmWWxneg1CGQ7VuQ624HKy=s72-rwa" alt = "SVG"/> Filter <span class = "HalfLogo"> Forces</span></h2>
                   <label htmlFor="email">Email Address</label>
                   <input
                       type="text"
                       placeholder="Enter email address"
                       class="email"
                      
-                      name="email"
+                      
                        />
               </div>
               <div>
@@ -118,15 +132,17 @@ function LoadHTML() {
                       placeholder="Enter your password"
                       class="password"
                      
-                      name="password"
+                      
                      />
               </div>
+              <button id = "formLogin">Login</button>
               <div class = "row">
-                  <button id = "formLogin">Login</button>
-                  <p id = "formForgot">Forgot passowrd</p>
+                  
+                  <p id = "formForgot"><a href = "https://filterforces.herokuapp.com/forgotPassword" target = "_blank" rel="noopener noreferrer">Forgot passowrd</a></p>
+                  <p>New to here ? <a href = "https://filterforces.herokuapp.com/register" target = "_blank" rel="noopener noreferrer">Register</a></p>
               </div>
           </div>
-          <p id = "formRegister">New to here? Register</p>
+       
       </div>`
     }
     
@@ -142,8 +158,8 @@ function LoadHTML() {
     var Time = document.getElementById("Number");
    
     var Interval;
-    const ImgsrcPause = chrome.runtime.getURL("pause.png");
-    const ImgsrcPlay = chrome.runtime.getURL("play-button-arrowhead.png");
+    const ImgsrcPause = chrome.runtime.getURL("/Assets/pause.png");
+    const ImgsrcPlay = chrome.runtime.getURL("/Assets/play-button-arrowhead.png");
     
     //Login section
     var formLogin = document.getElementById("formLogin");

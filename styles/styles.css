@@ -1,0 +1,117 @@
+ @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Are+You+Serious&family=Luckiest+Guy&display=swap');
+#pud{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: 'Are You Serious', cursive;
+    font-family: 'Luckiest Guy', cursive;
+    color: black;
+}
+.cat{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: 'Are You Serious', cursive;
+    font-family: 'Luckiest Guy', cursive;
+    color: black;
+} 
+.HalfLogo{
+    color: rgb(129, 129, 235);
+}
+.SVG{
+    width: 15%;
+}
+h5{
+    color: rgb(0, 0, 0);
+}
+.Controls{
+       
+      
+      text-align: center;
+       width: 30%;
+     
+       margin-left: auto;
+    margin-right: auto;
+    margin-top:auto;
+    margin-bottom:auto;
+} 
+#Buttn{
+       width: 25px;
+       height: 30px;
+       
+}
+#Number{
+    background-color: springgreen;
+    text-align: center;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid rgb(255, 237, 237);
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
+.Mainrow{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.Mainrow button{
+ 
+    padding: 10px 0 10px 0;
+    color: rgb(0, 0, 0);
+    background-color: rgb(32, 58, 58);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  color: snow;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+
+   .login_page input{
+       width: auto;
+       height: 45px;
+       margin-top: 10px;
+       margin-left: auto;
+       margin-right: auto;
+       border: 2px solid #777;
+       outline: none;
+       padding: 0 10px;
+       
+   }
+    .login_page .row{
+       display: flex;
+       justify-content: space-between;
+       flex-direction: column;
+       flex-wrap: wrap-reverse;
+       align-items: flex-start;
+   }
+   .login_page .row a{
+       color: rgb(250, 19, 19);
+   }
+   .login_page  button{
+       width: 150px;
+       padding: 10px 0 10px 0;
+       color: white;
+       background: rgb(97, 47, 47);
+       text-transform: uppercase;
+       letter-spacing: 1.5px;
+       margin-right: 10px;
+       margin-top: 5px;
+       margin-bottom: 5px;
+       
+   }
+   .login_page p{
+       margin: 10px 0;
+       font-weight: bolder;
+   }
+   .login_page a{
+       color:  rgb(255, 248, 248);
+       font-weight: 600;
+   }

@@ -118,9 +118,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                                 mode: 'cors',
                                 body: JSON.stringify(obj)
                             })
-                            const d = await redData.json();
+                           
+                            console.log(redData.status)
                        
-                            sendResponse("success");
+                            sendResponse(redData.status);
                         } catch (err) {
                            
                             sendResponse(err.message);

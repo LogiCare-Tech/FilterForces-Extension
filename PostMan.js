@@ -54,8 +54,8 @@ function INSERT() {
 
         chrome.runtime.sendMessage({ message: ["FetchPset", Payload] }, (response) => {
            
-      
-          if (response === "success") {
+      console.log(response)
+          if (response == 201) {
             console.log("hi");
             alert("Successfull");
             localStorage.removeItem("CURRENT_ACTIVE_PROBLEM");
@@ -66,10 +66,17 @@ function INSERT() {
         
          window.location.reload();
           }
-          else{
-            alert(response);
+          else if(response == 401){
+            alert("Please post using the handle which you gave while registering to the FilterForces");
+            alert("When you logout, the time recorder for solving this question will be deleted.. Please start from the beginning");
+            
             window.location.reload();
            
+          }
+          else{
+            alert(response);
+
+            window.location.reload();
           }
         })
 

@@ -23,28 +23,29 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["pause.png",
-                "play-button-arrowhead.png"],
+            "resources": ["/Assets/pause.png",
+                "/Assets/play-button-arrowhead.png"],
                 "matches": ["https://codeforces.com/*"]
         }
         
     ],
        "icons": { 
               
-           "48": "Logo.png",
-           "128": "Logo128.png"
+           "48": "/Assets/Logo.png",
+           "128": "/Assets/Logo128.png",
+           "16": "/Assets/Logo16.png"
            },
     "content_scripts":[
            {
                   "matches": ["https://codeforces.com/problemset/problem/*"],
-                  "js":["SecondTimer.js"],
-                  "css": ["styles.css"]
+                  "js":["Timer.js"],
+                  "css": ["/styles/styles.css"]
                   
            },
            {
                "matches": ["https://codeforces.com/problemset/status?", "https://codeforces.com/problemset/status?my=on", "https://codeforces.com/problemset/status?friends=on", "https://codeforces.com/contest/*/submit", "https://codeforces.com/contest/*/my"],
-               "js": ["sendTime.js"],
-               "css": ["containerTimer.css"]
+               "js": ["PostMan.js"],
+               "css": ["/styles/containerTimer.css"]
            }
     ],
     "background": {
