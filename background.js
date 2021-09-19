@@ -1,4 +1,22 @@
 //Remove Start time from local Storage as soon as POST request.
+var ProblemsInfo
+
+var FetchProblems = async () => {
+    try{
+        ProblemsInfo = await fetch('https://codeforces.com/api/problemset.problems',{
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include'
+        })
+        ProblemsInfo = await ProblemsInfo.json()
+        ProblemsInfo = ProblemsInfo.result.problems 
+    }
+    catch(Err)
+    {
+        throw Err
+    }
+}
+FetchProblems()
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message[0] === "login") {
 
@@ -83,7 +101,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         info.verdict === "OK")
                 })
                 if (PostQn.length === 0) {
-                    sendResponse("Please wait for the verdict");
+                    sendResponse("Submit only when your solution is Accepted");
                 }
 
                 try {
@@ -95,13 +113,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     })
                     const { access_token } = await response.json();
                     const filterInfo = PostQn[0];
-                    let ProblemsInfo = await fetch('https://codeforces.com/api/problemset.problems',{
-                        method: 'GET',
-                        mode: 'cors',
-                        credentials: 'include'
-                    })
-                    ProblemsInfo = await ProblemsInfo.json()
-                    ProblemsInfo = ProblemsInfo.result.problems 
+                   if(!ProblemsInfo)
+                   {
+                       sendResponse("Codeforces api is not functioning...")
+                   }
                     let RatingInfo = ProblemsInfo.filter((info) => Number(info.contestId) === Number(PAYLOAD.contestId) && info.index === PAYLOAD.type)
                     RatingInfo = RatingInfo[0]
                 
