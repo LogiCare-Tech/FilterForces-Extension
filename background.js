@@ -16,7 +16,7 @@ var FetchProblems = async () => {
         throw Err
     }
 }
-FetchProblems()
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message[0] === "login") {
 
@@ -83,7 +83,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const PAYLOAD = request.message[1];
         let time = PAYLOAD.time.split(',')
         let inSeconds = (Number(time[0]) * 60 * 60) + ((Number(time[1]) * 60) + (Number(time[2])))
-        console.log(inSeconds)
+        FetchProblems()
         const getPersonalPset = async () => {
             try {
                 const data = await fetch(`https://codeforces.com/api/user.status?handle=${PAYLOAD.handle}`, {

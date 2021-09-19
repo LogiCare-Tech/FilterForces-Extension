@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "ProductivityViz",
+    "name": "FilterForces",
     "version": "0.1.0",
-    "description": "Visualizes the time took to solve particular type of question",
+    "description": "Extension used to record the time taken to solve a problem ",
     "permissions": [
         "activeTab",
         "tabs",
@@ -11,9 +11,8 @@
         "webRequest"
     ],
     "host_permissions": [
-        "http://localhost:3001/*",
-        "https://filterforces.herokuapp.com/*",
-        "<all_urls>"
+    
+        "https://filterforces.herokuapp.com/*"
     ],
     "web_accessible_resources": [
         {
