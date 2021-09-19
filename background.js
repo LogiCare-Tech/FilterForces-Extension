@@ -1,22 +1,3 @@
-//Remove Start time from local Storage as soon as POST request.
-var ProblemsInfo
-
-var FetchProblems = async () => {
-    try{
-        ProblemsInfo = await fetch('https://codeforces.com/api/problemset.problems',{
-            method: 'GET',
-            mode: 'cors',
-            credentials: 'include'
-        })
-        ProblemsInfo = await ProblemsInfo.json()
-        ProblemsInfo = ProblemsInfo.result.problems 
-    }
-    catch(Err)
-    {
-        throw Err
-    }
-}
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message[0] === "login") {
 
@@ -83,44 +64,79 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const PAYLOAD = request.message[1];
         let time = PAYLOAD.time.split(',')
         let inSeconds = (Number(time[0]) * 60 * 60) + ((Number(time[1]) * 60) + (Number(time[2])))
-        FetchProblems()
-        const getPersonalPset = async () => {
+        var ProblemsInfo
+        const AllPset = async() => {
+            try{
+                ProblemsInfo = await fetch('https://codeforces.com/api/problemset.problems',{
+                    method: 'GET',
+                    mode: 'cors',
+                    credentials: 'include'
+                })
+                ProblemsInfo = await ProblemsInfo.json()
+                ProblemsInfo = ProblemsInfo.result.problems 
+                console.log("Rani ",ProblemsInfo)
+                getPersonalPset();
+            }
+            catch(Err)
+            {
+             
+                sendResponse("Codeforces API is not working...")
+            }
+            
+        }
+        AllPset()
+     
+        
+        async function getPersonalPset() {
             try {
+
+                //If API is not responding
+                if(!ProblemsInfo)
+                {
+                   sendResponse("Codeforces api is not functioning...")
+                }
+
+
+                //Get the personal submission list
                 const data = await fetch(`https://codeforces.com/api/user.status?handle=${PAYLOAD.handle}`, {
                     method: 'GET',
                     mode: 'cors',
                     credentials: 'include'
                 })
-                let convertedData = await data.json();
-                console.log(convertedData.result)
-                let PostQn = convertedData.result.filter((info) => {
+                let personalSubmission = await data.json();
+               
+
+                //Check if the problem is ready to post or not
+                let readyToPost = personalSubmission.result.filter((info) => {
                     return (
                         info.problem.index === PAYLOAD.type &&
                         Number(info.problem.contestId) === Number(PAYLOAD.contestId) && 
                         PAYLOAD.startTime <= info.creationTimeSeconds &&
                         info.verdict === "OK")
                 })
-                if (PostQn.length === 0) {
+                if (readyToPost.length === 0) {
                     sendResponse("Submit only when your solution is Accepted");
                 }
 
                 try {
-                    const response = await fetch('https://filterforces.herokuapp.com/api/Users/refresh_token', {
+
+
+                    const getAccessToken = await fetch('https://filterforces.herokuapp.com/api/Users/refresh_token', {
                         method: 'POST',
                         credentials: 'include',
                         mode: 'cors'
 
                     })
-                    const { access_token } = await response.json();
-                    const filterInfo = PostQn[0];
-                   if(!ProblemsInfo)
-                   {
-                       sendResponse("Codeforces api is not functioning...")
-                   }
+                    const { access_token } = await getAccessToken.json();
+
+                   //@filterInfo => Qustion info from user's submission list
+                   const filterInfo = readyToPost[0];
+                  
+                   //Collecting the rating separately because they haven't provided that in personal submission data api
                     let RatingInfo = ProblemsInfo.filter((info) => Number(info.contestId) === Number(PAYLOAD.contestId) && info.index === PAYLOAD.type)
                     RatingInfo = RatingInfo[0]
                 
-                   console.log(RatingInfo)
+                   
                     let obj = {
 
                         topic: [...filterInfo.problem.tags],
@@ -133,9 +149,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     {
                         obj["rating"] = Number(RatingInfo.rating)
                     }
-                    console.log(obj)
+                    
                     try {
-                        const redData = await fetch('https://filterforces.herokuapp.com/api/Visualize', {
+                        const savedData = await fetch('https://filterforces.herokuapp.com/api/Visualize', {
                             method: 'POST',
                             headers: {
                                 'Authorization': access_token,
@@ -147,9 +163,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                             body: JSON.stringify(obj)
                         })
 
-                        console.log(redData.status)
+                        
 
-                        sendResponse(redData.status);
+                        sendResponse(savedData.status);
                     } catch (err) {
 
                         sendResponse(err.message);
@@ -168,7 +184,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             }
 
         }
-        getPersonalPset();
+      
 
 
         return true;
