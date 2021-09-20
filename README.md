@@ -1,2 +1,58 @@
 # FilterForces-Extension
+
+
+[![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/shreenanda-8)
+
+
+
+[![MIT license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/LogiCare-Tech/FilterForces/blob/master/LICENSE)
+
+## WILL BE RELEASING SOON...
+ 
+<p align="center">
+  <a href="https://codeforces-diary.netlify.app/">
+    <img src="https://github.com/LogiCare-Tech/FilterForces-Extension/blob/master/Assets/Logo128.png" alt="Logo" width="auto" height="100">
+  </a>
+
+  <strong>
+    <h3 align="center" >FilterForces</h3>
+  </strong>
+  <p align="center">
+    Visualize your growth, train efficiently by tracking the time ⏲ taken to solve the problems.
+    <br />
+    <br />
+    <a href="https://filterforces.herokuapp.com/">View WebApp</a>
+    ·
+    <a href="https://github.com/LogiCare-Tech/FilterForces-Extension/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/LogiCare-Tech/FilterForces-Extension/issues">Request Feature</a>
+  </p>
+</p>
+
+   
+## About
 Extension to record the time taken to solve an Algorithmic problem and send the time to backend. The data from the database is used to visualize the growth.
+
+## Features
+
+| Feature                    |  Coded?  | Description                                                   |
+| -------------------------- | :------: | :------------------------------------------------------------ |
+| Log In                     | &#10004; | Ability to Log In                                             |
+| Log Out                    | &#10004; | Ability to Log Out                                            |
+| Register           | &#10004; | Ability to Register                  |
+| Forgot Password           | &#10004; | Ability to Reset the Password                  |
+| Timer    | &#10004; | Ability to record the time taken to solve Algorithmic Problems|
+| Save the time    | &#10004; | Ability to save the time taken so as to visualize the growth in FilterForces WebApp|
+## Demonstratoin
+
+[FilterForces](https://user-images.githubusercontent.com/54429809/133965399-a7045cf6-92cb-45b1-a5e8-17bd77266c9e.mp4 "For Large Screens as well as Small Screens")
+
+
+
+## Built With
+
+* [JAVASCIRPT](https://www.javascript.com/)
+* [MANIFESTV3](https://developer.chrome.com/docs/extensions/mv3/intro/)
+
+
+
