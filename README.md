@@ -43,7 +43,7 @@ Extension to record the time taken to solve an Algorithmic problem and send the 
 | Forgot Password           | &#10004; | Ability to Reset the Password                  |
 | Timer    | &#10004; | Ability to record the time taken to solve Algorithmic Problems|
 | Save the time    | &#10004; | Ability to save the time taken so as to visualize the growth in FilterForces WebApp|
-## Demonstratoin
+## Demonstration
 
 [FilterForces](
 https://user-images.githubusercontent.com/54429809/133999575-f7bba4f0-05c6-4983-89f9-68699ad97525.mp4 "For Large Screens as well as Small Screens")
