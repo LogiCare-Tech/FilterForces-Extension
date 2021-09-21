@@ -67,9 +67,9 @@ function INSERT() {
 
             window.location.reload();
           }
-          else if (response == 401) {
-            alert("Please post using the handle which you gave while registering to the FilterForces");
-            alert("When you logout, the time recorder for solving this question will be deleted.. Please start from the beginning");
+          else if (response == 400) {
+          
+            alert("Un-Authorized");
 
             window.location.reload();
 

@@ -142,8 +142,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         topic: [...filterInfo.problem.tags],
                      
                         time: String(inSeconds),
-                        type: PAYLOAD.type,
-                        handle: PAYLOAD.handle
+                        type: PAYLOAD.type
                     }
                     if(RatingInfo.rating)
                     {
