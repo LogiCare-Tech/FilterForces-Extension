@@ -2,9 +2,6 @@
 
 
 [![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/shreenanda-8)
-
-
-
 [![MIT license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/LogiCare-Tech/FilterForces/blob/master/LICENSE)
 
 ## WILL BE RELEASING SOON...
