@@ -4,7 +4,7 @@
 [![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/shreenanda-8)
 [![MIT license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/LogiCare-Tech/FilterForces/blob/master/LICENSE)
 
-## WILL BE RELEASING SOON...
+
  
 <p align="center">
   <a href="https://codeforces-diary.netlify.app/">
@@ -29,6 +29,8 @@
    
 ## About
 Extension to record the time taken to solve an Algorithmic problem and send the time to backend. The data from the database is used to visualize the growth.
+ 
+<a href="https://www.youtube.com/watch?v=6WLlupC5pm8" target="_blank" rel="noreferrer">Watch the video</a>
 
 ## Features
 
