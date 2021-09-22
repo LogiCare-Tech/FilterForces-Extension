@@ -128,7 +128,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
                     })
                     const { access_token } = await getAccessToken.json();
-
+                    if(!access_token)
+                    {
+                        sendResponse("Please login...");
+                    }
                    //@filterInfo => Qustion info from user's submission list
                    const filterInfo = readyToPost[0];
                   
