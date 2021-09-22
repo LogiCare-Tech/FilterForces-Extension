@@ -28,7 +28,7 @@
 
    
 ## About
-Extension to record the time taken to solve an Algorithmic problem and send the time to backend. The data from the database is used to visualize the growth.
+Extension to record the time taken to solve the Algorithmic problems and  visualize the growth.
  
 <a href="https://www.youtube.com/watch?v=6WLlupC5pm8" target="_blank" rel="noreferrer">Watch the video</a>
 
